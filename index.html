@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <!-- <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script> -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js" crossorigin></script>
+    <script src="ByteCompare.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  </head>
+  <style>
+    :root {
+        --light-gray: rgb(188, 188, 188);
+        --red: rgb(220,20,60);
+        --light-green: rgb(57, 209, 57);
+        --green: green;
+        --light-green: rgb(57, 209, 57);
+    }
+    fieldset {
+        display: flex;
+    }
+
+    fieldset .wrapper__checkbox {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+
+  </style>
+  <body>
+    <div id="app"></div>
+    <script type="text/babel">
+        // const StateContaiter = ({states, index}) => {
+        //     // const state = bs.createState(states);
+
+        //     return <StateComponent  name={`State: ${index}`} states={states}/>
+        // }
+
+        const StateContaiter = ({availableStates, index, state}) => {
+
+            const handleClick = (el) => {
+                state.toggle(el)
+                console.log(state.getStateBinary())
+            }
+            // console.log(state && state.hasAny)
+
+            return <fieldset>
+                <legend>State: {index}</legend>
+
+                {availableStates.map((el, i) => {
+                    return <div className="wrapper__checkbox"> 
+                        <label htmlFor={i}>{el}</label>  
+                        <input checked={state.hasAnyKey(el)} onChange={() => handleClick(el)} type="checkbox" name={i} id={i}/>
+                    </div>
+                })}    
+            </fieldset>
+        }
+
+        const App = () => {
+            // todo:remove common state
+            const availableStates = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];
+
+            const bc = new ByteCompare(availableStates);
+
+            const states = [bc.createState(['a']), bc.createState(['a'])];
+
+            return <div>
+                {states.map((el, i) => {
+                    return <StateContaiter availableStates={availableStates} index={i + 1} state={el}/>
+                })}
+            </div>;
+        }
+        ReactDOM.createRoot(document.getElementById('app')).render(<App />);
+    </script>
+  </body>
+</html>

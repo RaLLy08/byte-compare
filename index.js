@@ -4,17 +4,19 @@ const myState = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'
 
 const bs = new ByteCompare(myState);
 
-const a = bs.createState(['a', 'b']);
-const b = bs.createState(['a', 'b']);
-const c = bs.createState(['c', 'b']);
+const a = bs.createState(['a','c']);
+const b = bs.createState(['e','c', 'a', 'b']);
+const c = bs.createState(['c', 'b', 'a']);
+const d = bs.createState(['c', 'b', 'a']);
 
 
-console.log(b.has(a));
-// get includes ? has
-// exclude
-// same
-// bench
-// html
+console.log(a.hasAny(b));
+console.log(a.getIntersection(b));
+console.log(a.includesInMany([b, c]));
+console.log(d.same(c));
+console.log(d.toggle('c'));
+
+
 
 
 
